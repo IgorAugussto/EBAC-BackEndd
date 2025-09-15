@@ -1,49 +1,70 @@
+
 public class Reserva {
 
-    private String nome;
-    private String cpf;
+    private String nomeHospede;
     private String tipoQuarto;
-    private int diarias;
-    private double valorDiaria;
-    private int[] qtdReserva = new int[10];
+    private String cpf;
+    private int numeroDias;
+    private double quatoEscolhido;
+    private String quatoEscolhidoEscrito;
+    private double quartoStandard = 250.00;
+    private double quartoLuxo = 600.00;
+    private double quartoPresidencial = 2500.00;
+    private String quartoStandardEscrito = "Standard";
+    private String quartoLuxoEscrito = "Luxo";
+    private String quartoPresidencialEscrito = "Presiencial";
+    private double valorTotalDiaria;
 
-    public Reserva(String nome, String cpf, String tipoQuarto, int diarias) {
-        this.nome = nome;
+    public Reserva(String nomeHospede, String cpf, int numeroDias) {
+        this.nomeHospede = nomeHospede;
         this.cpf = cpf;
-        this.tipoQuarto = tipoQuarto;
-        this.diarias = diarias;
-        
+        this.numeroDias = numeroDias;
     }
 
-    //Calcular valor total da diaria: quantidade de dias * valor da diaria (Retorna double)
-    public double calcularValorTotalDiaria(int diarias, double valorDiaria) {
-        double resultado = diarias * valorDiaria;
+    public Reserva() {}
 
-        return resultado;
+    public double escolherQuarto(int opcao) {
+        switch (opcao) {
+            case 1:
+                setQuatoEscolhido(getQuartoStandard());
+                calcularValorTotal(getQuatoEscolhido());
+                setQuatoEscolhidoEscrito(getQuartoStandardEscrito());
+                break;
+            case 2:
+                setQuatoEscolhido(getQuartoLuxo());
+                calcularValorTotal(getQuatoEscolhido());
+                setQuatoEscolhidoEscrito(getQuartoLuxoEscrito());
+                break;
+            case 3:
+                setQuatoEscolhido(getQuartoPresidencial());
+                calcularValorTotal(getQuatoEscolhido());
+                setQuatoEscolhidoEscrito(getQuartoPresidencialEscrito());
+        }
+        return getQuatoEscolhido();
     }
 
-    //Registrar reserva
-    public void registrarReserva() {
+    public double calcularValorTotal(double quartoEscolhido) {
+        valorTotalDiaria = numeroDias * quartoEscolhido;
+        setValorTotalDiaria(valorTotalDiaria);
+        return getValorTotalDiaria();
+    }
 
+    @Override
+    public String toString() {
+        return String.format("Nome: %s \nCPF: %s \nDiárias: %d \nTipo de Quarto: %s \nValor Total: R$%.2f\n\n",
+                nomeHospede, cpf, numeroDias, quatoEscolhidoEscrito != null ? quatoEscolhidoEscrito : "Não definido", getValorTotalDiaria());
     }
 
 
 
 
-    public String getNome() {
-        return nome;
+    //GETTERS SETTERS
+    public String getNomeHospede() {
+        return nomeHospede;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setNomeHospede(String nomeHospede) {
+        this.nomeHospede = nomeHospede;
     }
 
     public String getTipoQuarto() {
@@ -54,27 +75,70 @@ public class Reserva {
         this.tipoQuarto = tipoQuarto;
     }
 
-    public int getDiarias() {
-        return diarias;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setDiarias(int diarias) {
-        this.diarias = diarias;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public double getValorDiaria() {
-        return valorDiaria;
+    public int getNumeroDias() {
+        return numeroDias;
     }
 
-    public void setValorDiaria(double valorDiaria) {
-        this.valorDiaria = valorDiaria;
+    public void setNumeroDias(int numeroDias) {
+        if (numeroDias <= 0) {
+            throw new IllegalArgumentException("Quantidade de dias precisa ser maior que zero !");
+        }
+        this.numeroDias = numeroDias;
     }
 
-    public int[] getQtdReserva() {
-        return qtdReserva;
+    public double getQuartoStandard() {
+        return quartoStandard;
     }
 
-    public void setQtdReserva(int[] qtdReserva) {
-        this.qtdReserva = qtdReserva;
+    public String getQuartoStandardEscrito() {
+        return quartoStandardEscrito;
+    }
+
+    public String getQuartoLuxoEscrito() {
+        return quartoLuxoEscrito;
+    }
+
+    public String getQuartoPresidencialEscrito() {
+        return quartoPresidencialEscrito;
+    }
+
+    public double getQuartoLuxo() {
+        return quartoLuxo;
+    }
+
+    public double getQuartoPresidencial() {
+        return quartoPresidencial;
+    }
+
+    public double getQuatoEscolhido() {
+        return quatoEscolhido;
+    }
+
+    public void setQuatoEscolhido(double quatoEscolhido) {
+        this.quatoEscolhido = quatoEscolhido;
+    }
+
+    public String getQuatoEscolhidoEscrito() {
+        return quatoEscolhidoEscrito;
+    }
+
+    public void setQuatoEscolhidoEscrito(String quatoEscolhidoEscrito) {
+        this.quatoEscolhidoEscrito = quatoEscolhidoEscrito;
+    }
+
+    public double getValorTotalDiaria() {
+        return valorTotalDiaria;
+    }
+
+    public void setValorTotalDiaria(double valorTotalDiaria) {
+        this.valorTotalDiaria = valorTotalDiaria;
     }
 }
